@@ -1,22 +1,23 @@
 <template>
   <div class="control-panel">
     <input v-model="itemName" type="text" />
-    <button @click="addItem">Add item</button>
+    <button @click="addItem(itemName)">Add item</button>
   </div>
 </template>
 
 <script>
+import { mapActions } from "pinia";
+import store from "../store";
+
 export default {
-  name: 'ControlPanel',
+  name: "ControlPanel",
   data() {
     return {
-      itemName: '',
+      itemName: "",
     };
   },
   methods: {
-    addItem() {
-      this.$emit('add-item', this.itemName);
-    },
+    ...mapActions(store, ["addItem"]),
   },
 };
 </script>

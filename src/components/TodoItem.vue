@@ -1,13 +1,17 @@
 <template>
   <li class="todo-list-item">
     <span>{{ item.name }}</span>
-    <button @click="removeItem"><img src="../assets/bin.png" alt="" /></button>
+    <button @click="removeItem(item.id)">
+      <img src="../assets/bin.png" alt="" />
+    </button>
   </li>
 </template>
 
 <script>
+import { mapActions } from "pinia";
+import store from "../store";
 export default {
-  name: 'TodoItem',
+  name: "TodoItem",
   props: {
     item: {
       type: Object,
@@ -15,9 +19,7 @@ export default {
     },
   },
   methods: {
-    removeItem() {
-      this.$emit('remove-item', this.item.id);
-    },
+    ...mapActions(store, ["removeItem"]),
   },
 };
 </script>

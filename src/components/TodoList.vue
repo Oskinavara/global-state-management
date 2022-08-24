@@ -1,25 +1,27 @@
 <template>
   <ul class="todo-list">
-    <TodoItem v-for="item in items" :key="item.id" :item="item" @remove-item="removeItem($event)" />
+    <TodoItem v-for="item in items" :key="item.id" :item="item" />
   </ul>
+  <button @click="addNewItem">Add new item</button>
 </template>
 
 <script>
-import TodoItem from './TodoItem.vue';
+import { mapStores, mapWritableState } from "pinia";
+import store from "../store";
+import TodoItem from "./TodoItem.vue";
 export default {
-  name: 'TodoList',
+  name: "TodoList",
   components: {
     TodoItem,
   },
-  props: {
-    items: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    // ...mapStores(store), gives access to "mainStore" variable
+    // ("main" comes from store ID found in store declaration file)
+    ...mapWritableState(store, ["items"]),
   },
   methods: {
-    removeItem(id) {
-      this.$emit('remove-item', id);
+    addNewItem() {
+      this.items.push({ name: "Hello", id: 100 });
     },
   },
 };
